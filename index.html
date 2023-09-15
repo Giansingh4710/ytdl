@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Youtube Video</title>
+</head>
+
+<body>
+  <h2>Download Youtube Video</h2>
+  <input type="text" id="url" placeholder="Enter Youtube Video URL">
+  <button onclick="dl()">Download</button>
+  <script>
+    function dl() {
+      link = document.getElementById("url").value
+      console.log(link)
+      // fetch('http://45.76.2.28:1313/', {
+      fetch('http://127.0.0.1:1313', {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "url": link
+        }), // body data type must match "Content-Type" header
+      })
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          console.log(data)
+        })
+    }
+  </script>
+
+</html>
