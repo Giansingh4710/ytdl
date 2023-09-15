@@ -14,17 +14,17 @@
   <button onclick="dl()">Download</button>
   <script>
     function dl() {
-      link = document.getElementById("url").value
-      console.log(link)
-      // fetch('http://45.76.2.28:1313/', {
-      fetch('http://127.0.0.1:1313', {
+      const link = document.getElementById("url").value
+      const dataSend = {"url": link}
+      console.log(dataSend)
+      const serverLink = 'http://45.76.2.28:1313/'
+      // const serverLink = 'http://127.0.0.1:1313'
+      fetch(serverLink, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          "url": link
-        }), // body data type must match "Content-Type" header
+        body: JSON.stringify(dataSend),
       })
         .then((response) => {
           return response.json()

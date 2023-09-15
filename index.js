@@ -1,25 +1,31 @@
 const ytdl = require('ytdl-core')
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser'); // To parse JSON data in the request body
 
-const cors = require('cors')
-const corsOptions = {
-  origin: 'http://127.0.0.1:1313',
-}
-app.use(cors(corsOptions))
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://45.76.2.28');
+  // You can set other CORS headers here as needed
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+app.listen(1313, () => {
+  console.log('Server is running on port 1313');
+});
 
-app.listen(1313)
-app.get('/', (req, res) => {
-  res.send('Get Received: ')
-})
 app.post('/', (req, res) => {
-  let data = req.body
-  res.send('Data Received: ' + JSON.stringify(data))
+  const postData = req.body; // This contains the data sent in the POST request body
+  console.log(postData)
+  res.status(200).json({ 
+    message: 'Data received successfully',
+    serverReceived : req.body,
+    //req: JSON.stringify(req)
+  });
 })
 
 
 const url = 'https://www.youtube.com/watch?v=ungkoUHIs7Y'
-
 async function downloadVideo(url) {
   if (!ytdl.validateURL(url)) {
     console.log('URL not valid')
@@ -40,4 +46,8 @@ async function downloadVideo(url) {
   console.log(data.length)
   return data
 }
-// downloadVideo(url)
+
+app.get('/', (req, res) => {
+  res.send('Get Received: ')
+})
+
