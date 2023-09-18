@@ -47,8 +47,8 @@
       document.getElementById("submit_dl").disabled = true
       const link = document.getElementById("url").value
       const dataSend = {"url": link}
-      // const serverLink = 'http://45.76.2.28:1313/'
-      const serverLink = 'http://127.0.0.1:1313'
+      const serverLink = 'http://45.76.2.28:1313/'
+      // const serverLink = 'http://127.0.0.1:1313'
       fetch(serverLink, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         headers: {

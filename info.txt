@@ -1,0 +1,11 @@
+https://stackoverflow.com/questions/4018154/how-do-i-run-a-node-js-app-as-a-background-service/29042953#29042953
+
+Note if you're new to Unix: /var/www/myapp/app.js should have #!/usr/bin/env node on the very first line and have the executable mode turned on chmod +x app.js.
+
+Copy your service file into the /etc/systemd/system.
+
+Start it with systemctl start myapp.
+
+Enable it to run on boot with systemctl enable myapp.
+
+See logs with journalctl -u myapp
