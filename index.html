@@ -27,9 +27,10 @@
     <button id="submit_dl" onclick="dl()">Download</button>
   </div>
 
-  <div>
+  <div id="result">
     <h3 id="yt_title"></h3>
-    <table id="result" summary="">
+    <button onclick="copyTitle()">Copy Title</button>
+    <table  summary="">
       <tr>
         <th>itag</th>
         <th>mimeType</th>
@@ -41,14 +42,16 @@
   </div>
 
   <script type="">
-    const table = document.getElementById("result")
-    table.style.display = "none"
+    const resultDiv = document.getElementById("result")
+    resultDiv.style.display = "none"
+
     function dl() {
       document.getElementById("submit_dl").disabled = true
       const link = document.getElementById("url").value
       const dataSend = {"url": link}
       const serverLink = 'http://45.76.2.28:1313/'
       // const serverLink = 'http://127.0.0.1:1313'
+
       fetch(serverLink, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         headers: {
@@ -61,11 +64,17 @@
         })
         .then((data) => {
           console.log(data)
+          if (data.title === undefined){
+            alert("Invalid URL")
+            return
+          }
           update_screen(data)
         })
     }
+
     function update_screen(data) {
-      table.style.display = "block"
+      resultDiv.style.display = "block"
+      const table = document.getElementsByTagName("table")[0]
       document.getElementById("yt_title").innerText = data.title
       for(const i in data.formats) {
         const row = table.insertRow()
@@ -80,6 +89,12 @@
         cell4.innerHTML = `<p class="${data.formats[i].hasAudio}">${data.formats[i].hasAudio}</p>`
         cell5.innerHTML = `<p class="${data.formats[i].hasVideo}">${data.formats[i].hasVideo}</p>`
       }
+    }
+
+    function copyTitle(){
+      const title = document.getElementById("yt_title").innerText
+      navigator.clipboard.writeText(title)
+      console.log(title)
     }
   </script>
 
